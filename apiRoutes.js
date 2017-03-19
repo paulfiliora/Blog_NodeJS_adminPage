@@ -53,4 +53,34 @@ router.use((request, response) => {
 	response.send(TodoList.getItems());
 });
 
+
+    //   const author = function () { console.log("author"); };
+    //   const books = function () { console.log("books"); };
+    //   const viewBook = function (bookId) {
+    //     console.log("viewBook: bookId is populated: " + bookId);
+    //   };
+
+    //   const routes = {
+    //     '/home': () => {
+    //         //Initializer on page load
+    //         GET('/api/todos')
+    //             .then((todoItems) => {
+    //                 render(todoItems);
+    //             });
+    //     },
+    //     '/post/:postId': (postId) => {
+    //         //Initializer on page load
+    //         GET('/api/todos/'+postId)
+    //             .then((todoItems) => {
+    //                 // render(onePost);
+    //             });
+    //     }
+    // };
+
+    // const router = Router(routes);
+
+    // router.init();
+    // router.setRoute('/home')
+
+
 module.exports = router;
