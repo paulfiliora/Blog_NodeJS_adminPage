@@ -30,7 +30,6 @@ router.post('/todos', (request, response, next) => {
 
 // put todo
 router.put('/todo/:id', (request, response, next) => {
-	// console.log('HERE')
 	const id = parseInt(request.params.id, 10);
 	const dataPayload = request.body;
 
@@ -44,7 +43,6 @@ router.delete('/todo/:id', (request, response, next) => {
 	const id = parseInt(request.params.id, 10);
 
 	TodoList.deleteItem(id);
-	console.log("apiRoutes delete " + id)
 	next();
 }); // delete
 

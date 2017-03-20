@@ -94,38 +94,76 @@
     };// End of render on page load
 
     //Initializer on page load
-    GET('/api/todos')
-        .then((todoItems) => {
-            render(todoItems);
-        });
+    // GET('/api/todos')
+    //     .then((todoItems) => {
+    //         render(todoItems);
+    //     });
 
 
-    //   const author = function () { console.log("author"); };
-    //   const books = function () { console.log("books"); };
-    //   const viewBook = function (bookId) {
-    //     console.log("viewBook: bookId is populated: " + bookId);
-    //   };
+      // const author = function () { console.log("author"); };
+      // const books = function () { console.log("books"); };
+      // const viewBook = function (bookId) {
+      //   console.log("viewBook: bookId is populated: " + bookId);
+      // };
 
-    //   const routes = {
-    //     '/home': () => {
-    //         //Initializer on page load
-    //         GET('/api/todos')
-    //             .then((todoItems) => {
-    //                 render(todoItems);
-    //             });
-    //     },
-    //     '/post/:postId': (postId) => {
-    //         //Initializer on page load
-    //         GET('/api/todos/'+postId)
-    //             .then((todoItems) => {
-    //                 // render(onePost);
-    //             });
-    //     }
-    // };
+      const routes = {
+        '/home': () => {
+            //Initializer on page load
+            GET('/api/todos')
+                .then((todoItems) => {
+                    render(todoItems);
+                });
+        },
+        '/post/:postId': (postId) => {
+            //Initializer on page load
+            GET('/api/todos/'+ postId)
+                .then((todoItems) => {
+                    console.log(todoItems)
+                    renderOnePost(todoItems);
+                });
+        }
+    };
+// somehow need to use the postID as the ID to get a specific item in the Todos,
+// then render just the data: todo, title, image.
 
-    // const router = Router(routes);
+    function renderOnePost(todoItems) {
+        // const sortedData = todoItems.sortby(['id'])
+        const mainContainer = document.querySelector('.js-to-hide');
+        mainContainer.style.display = "none";
 
-    // router.init();
-    // router.setRoute('/home')
+
+        const postContainer = document.querySelector('.js-one-post');
+        postContainer.style.display = "block";
+
+        postContainer.innerHTML = '';
+        // const todoItemsReverse = todoItems.reverse();
+        // for (const todoItem of sortedData) {
+        for (const todoItem of todoItems) {
+            // const div = document.createElement('div');
+            postContainer.innerHTML = `
+            <a href="../index.html">Back to home</a>
+
+                <header>
+                    <h2>${todoItem.data.title}</h2>
+                    <p>${todoItem.data.todo}</p>
+                </header>
+                <section>
+                    <hr />
+                    <header>
+                        <p>${todoItem.data.when}</p>
+                    </header>
+                </section>
+                  `;
+            // container.appendChild(div);
+        };
+    };// End of render on page load
+
+
+
+
+    const router = Router(routes);
+
+    router.init();
+    router.setRoute('/home')
 
 })();
