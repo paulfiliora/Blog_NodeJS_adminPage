@@ -109,6 +109,7 @@
             tr.querySelector('.js-todo-edit').addEventListener('click', (e) => {
               console.log("edit button")
               const editBox = document.querySelector('.js-edit-box')
+              editBox.innerHTML = ""
               editBox.innerHTML += `
               <div class="input-group">
               <input type="text" class="form-control js-update-title" placeholder="Username" aria-describedby="basic-addon1" value="${todoItem.data.title}">
