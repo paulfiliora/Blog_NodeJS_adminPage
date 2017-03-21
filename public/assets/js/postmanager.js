@@ -125,6 +125,7 @@
                 })
 
             });
+            
             //Update
             const updatePost = () => {
               console.log("clicked updater")
@@ -144,8 +145,9 @@
                     updateTitle.removeAttribute('disabled');
                     mainInput.removeAttribute('disabled');
                     updateTitle.value = '';
-                    // mainInput.value = '';
+                    mainInput.value = '';
                     renderFeed(data);
+                    console.log('rendered')
                 }).catch((e) => {
                     alert(e)
                 })
@@ -161,19 +163,5 @@
         .then((todoItems) => {
             renderFeed(todoItems);
         });
-
-
-
-    //Event listener for Delete All Selected Tasks
-    // document.querySelector('.js-clear-completed').addEventListener('click', (e) => {
-    //     console.log('clear completed')
-    //     DELETE('/api/todos/completed')
-    //       .then((data) => {
-    //         render(data)
-    //       })
-    //       .catch((e) => {
-    //         alert(e)
-    //       })
-    // });
 
 })();

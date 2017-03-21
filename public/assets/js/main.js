@@ -106,6 +106,7 @@
       //   console.log("viewBook: bookId is populated: " + bookId);
       // };
 
+//Flatiron Director. This creates unique pages based on postID.
       const routes = {
         '/home': () => {
             //Initializer on page load

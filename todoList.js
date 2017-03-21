@@ -32,11 +32,21 @@ TodoList.createItem = (itemToCreate) => {
 
 */
 TodoList.updateItem = (id, key, propertyToUpdate) => {
-	console.log("todolist.updateitem")
+	// console.log("todolist.updateitem")
 	db.get('todos')
 		  .find({ id })
 		  .set(key, propertyToUpdate)
 		  .write()
+	// const dataPayload = request.body;
+
+	// Object.keys(request.body).forEach((key) => {
+        // console.log(key, request.body[key])
+  //       console.log("to update :" + propertyToUpdate)
+		// db.get('todos')
+  //       .find({ id })
+  //       .set('data.' + key, propertyToUpdate)
+  //       .write();
+  // })
 }
 
 TodoList.deleteItem = (id) => {
