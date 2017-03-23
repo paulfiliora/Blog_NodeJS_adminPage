@@ -18,17 +18,17 @@ const TodoList = {};
 
 TodoList.getItems = () => {
 		// console.log(db.get('todos').value());
-	console.log("during regular get all: " +db.get('todos').value())
+	// console.log("during regular get all: " +db.get('todos').value())
 
 
 	return db.get('todos').value();
 }
 
-TodoList.getItem = () => {
+TodoList.getItem = (id) => {
 	// console.log("in todos" + id)
-	console.log("before the getbyid" +db.get('todos').value())
-	const post = db.get('todos').getById(1489347521299).value()
-console.log("after the getbyid: " +post)
+	// console.log("before the getbyid" +db.get('todos').value())
+	const post = db.get('todos').getById(id).value()
+// console.log("after the getbyid: " +post)
 return(post)
 	// return db.get('todos')
 	// .find({ id: 1489347514426 })

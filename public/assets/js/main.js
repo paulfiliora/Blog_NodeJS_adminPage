@@ -72,7 +72,7 @@
 //Render todo items from lowDB with checkbox toggle and remove icone
     function render(todoItems) {
         // const sortedData = todoItems.sortby(['id'])
-                console.log("renderall: " +todoItems)
+                // console.log("renderall: " +todoItems)
 
         const container = document.querySelector('.js-todolist');
         container.innerHTML = '';
@@ -102,7 +102,7 @@
 // then render just the data: todo, title, image.
 
     function renderOnePost(todoItem) {
-        console.log("render1 " +todoItem)
+        // console.log("render1 " +todoItem)
 
 
         // const sortedData = todoItems.sortby(['id'])

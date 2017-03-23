@@ -17,16 +17,22 @@ router.get('/todos',(request, response, next) => {
 
 //here's my issue. not passing in ID!!
 router.get('/post/:postId',(request, response, next) => {
-	// console.log(request.body)
-	// const id = parseInt(request.params.id, 10);
-	// const id = request.params.id
-	// console.log("in router"+ id)
+	// console.log(request.params.postId)
 
-	TodoList.getItem();
-	console.log("in the get 1: " +TodoList.getItem())
+	// const path = url.slice(API_PREFIX.length);
+	// const lastBit = path.split('/').pop();
+	// const isLastBitNum = !isNaN(lastBit);
+	// const id = parseInt(lastBit, 10);
+	const id = parseInt(request.params.postId, 10);
+	// const id = request.params.id
+	// console.log("in router looking for ID: "+ id)
+
+
+	TodoList.getItem(id);
+	// console.log("in the get 1: " +TodoList.getItem())
 	// next();
 	response.header('Content-Type', 'application/json');
-	response.send(TodoList.getItem());
+	response.send(TodoList.getItem(id));
 });
 
 
@@ -56,6 +62,7 @@ router.put('/todo/:id', (request, response, next) => {
 // delete todo
 router.delete('/todo/:id', (request, response, next) => {
 	const id = parseInt(request.params.id, 10);
+	// console.log(id)
 
 	TodoList.deleteItem(id);
 	next();
