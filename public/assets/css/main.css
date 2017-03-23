@@ -2533,6 +2533,17 @@
 
 	}
 
+.blogBox{
+	/*height: 350px !important; */
+	text-overflow: ellipsis;
+}
+
+.previewText{
+	overflow:hidden;
+	text-overflow: ellipsis;
+	/*max-height: 100px;*/
+}
+
 .hide{
 	
 }

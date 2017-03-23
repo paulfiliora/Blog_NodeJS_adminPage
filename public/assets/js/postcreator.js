@@ -69,6 +69,18 @@
         });
     } // DELETE
 
+    // function convertMS(ms) {
+    //   var d, h, m, s;
+    //   s = Math.floor(ms / 1000);
+    //   m = Math.floor(s / 60);
+    //   s = s % 60;
+    //   h = Math.floor(m / 60);
+    //   m = m % 60;
+    //   d = Math.floor(h / 24);
+    //   h = h % 24;
+    //   return { d: d, h: h, m: m, s: s };
+    // };
+
 const popup = document.querySelector('.notify');
     //Add ToDo function, User & Server Side processing
     const addToDo = () => {
@@ -82,13 +94,13 @@ const popup = document.querySelector('.notify');
             todo: mainInput.value,
             image: imageInput.value,
             when: new Date().getTime() + 9 * 60 * 60 * 1000
+            // const time = convertMS(when)
         }).then((data) => {
             titleInput.removeAttribute('disabled');
             mainInput.removeAttribute('disabled');
             titleInput.value = '';
             mainInput.value = '';
             popup.click()
-
             // render(data);
         });
     }

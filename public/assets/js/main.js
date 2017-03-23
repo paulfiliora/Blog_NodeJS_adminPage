@@ -72,20 +72,24 @@
 //Render todo items from lowDB with checkbox toggle and remove icone
     function render(todoItems) {
         // const sortedData = todoItems.sortby(['id'])
+                console.log("renderall: " +todoItems)
+
         const container = document.querySelector('.js-todolist');
         container.innerHTML = '';
         const todoItemsReverse = todoItems.reverse();
         // for (const todoItem of sortedData) {
         for (const todoItem of todoItemsReverse) {
+
             const div = document.createElement('div');
             div.innerHTML = `
-            <article class="container box style1 right todoinput">
+            <article class="container box style1 right todoinput blogBox">
       				<img class="image fit"src="images/${todoItem.data.image}" alt="" />
       				<div class="inner">
       					<header>
       						<h2><a href="#/post/${todoItem.id}">${todoItem.data.title}</a></h2>
       					</header>
-      					<p>${todoItem.data.todo}</p>
+      					<p class="previewText">${todoItem.data.todo}</p>
+                        <span><a href="#/post/${todoItem.id}">-Read more</a></span>
       				</div>
       			</article>
 			      `;
@@ -93,41 +97,14 @@
         };
     };// End of render on page load
 
-    //Initializer on page load
-    // GET('/api/todos')
-    //     .then((todoItems) => {
-    //         render(todoItems);
-    //     });
 
-
-      // const author = function () { console.log("author"); };
-      // const books = function () { console.log("books"); };
-      // const viewBook = function (bookId) {
-      //   console.log("viewBook: bookId is populated: " + bookId);
-      // };
-
-//Flatiron Director. This creates unique pages based on postID.
-      const routes = {
-        '/home': () => {
-            //Initializer on page load
-            GET('/api/todos')
-                .then((todoItems) => {
-                    render(todoItems);
-                });
-        },
-        '/post/:postId': (postId) => {
-            //Initializer on page load
-            GET('/api/todos/'+ postId)
-                .then((todoItems) => {
-                    console.log(todoItems)
-                    renderOnePost(todoItems);
-                });
-        }
-    };
 // somehow need to use the postID as the ID to get a specific item in the Todos,
 // then render just the data: todo, title, image.
 
-    function renderOnePost(todoItems) {
+    function renderOnePost(todoItem) {
+        console.log("render1 " +todoItem)
+
+
         // const sortedData = todoItems.sortby(['id'])
         const mainContainer = document.querySelector('.js-to-hide');
         mainContainer.style.display = "none";
@@ -137,29 +114,61 @@
         postContainer.style.display = "block";
 
         postContainer.innerHTML = '';
+        
         // const todoItemsReverse = todoItems.reverse();
-        // for (const todoItem of sortedData) {
-        for (const todoItem of todoItems) {
-            // const div = document.createElement('div');
-            postContainer.innerHTML = `
+        // for (const todoItem of todoItemsy) {
+            const div = document.createElement('div');
+        postContainer.innerHTML = `
             <a href="../index.html">Back to home</a>
-
                 <header>
+                    <img class="image fit"src="images/${todoItem.data.image}" alt="" />
                     <h2>${todoItem.data.title}</h2>
                     <p>${todoItem.data.todo}</p>
                 </header>
                 <section>
                     <hr />
                     <header>
-                        <p>${todoItem.data.when}</p>
+                        <p></p>
                     </header>
                 </section>
                   `;
-            // container.appendChild(div);
-        };
+            postContainer.appendChild(div);
+        // };
     };// End of render on page load
 
+    function convertMS(ms) {
+      var d, h, m, s;
+      s = Math.floor(ms / 1000);
+      m = Math.floor(s / 60);
+      s = s % 60;
+      h = Math.floor(m / 60);
+      m = m % 60;
+      d = Math.floor(h / 24);
+      h = h % 24;
+      return { d: d, h: h, m: m, s: s };
+    };
 
+    // console.log(convertMS(1490011140664))
+
+    //Flatiron Director. This creates unique pages based on postID.
+      const routes = {
+        '/home': () => {
+            //Initializer on page load
+            GET('/api/todos')
+                .then((todoItems) => {
+                    render(todoItems);
+                });
+        },
+        '/post/:postId': (postId) => {
+            console.log("starting postid: " +postId)
+            //Initializer on page load
+            GET('/api/post/'+ postId)
+                .then((todoItem) => {
+                    console.log("after get in Main: " +todoItem)
+                    renderOnePost(todoItem);
+                });
+        }
+    };
 
 
     const router = Router(routes);
