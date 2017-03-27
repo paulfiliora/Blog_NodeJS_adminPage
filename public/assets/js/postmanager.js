@@ -69,13 +69,13 @@
         });
     } // DELETE
 
-//Render todo items from lowDB with edit toggle and remove icons
-    function renderFeed(todoItems) {
-        // const sortedData = todoItems.sortby(['id'])
+//Render blog posts from lowDB with edit toggle and remove icons
+    function renderFeed(posts) {
+        // const sortedData = posts.sortby(['id'])
         const container = document.querySelector('.js-postlist');
         container.innerHTML = '';
-        // for (const todoItem of sortedData) {
-        for (const todoItem of todoItems) {
+        // for (const post of sortedData) {
+        for (const post of posts) {
             const tr = document.createElement('tr');
             tr.innerHTML = `
             <td>
@@ -83,21 +83,21 @@
                     <input type="checkbox" value="" data-toggle="checkbox">
                 </label>
             </td>
-            <td>Date: ${todoItem.data.when}</td>
-            <td><b>${todoItem.data.title}</b></td>
+            <td>Date: ${post.data.when}</td>
+            <td><b>${post.data.title}</b></td>
             `;
-            tr.innerHTML += `<td><button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs js-todo-edit">
+            tr.innerHTML += `<td><button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs js-post-edit">
                     <i class="fa fa-edit"></i>
                 </button></td>`
-            tr.innerHTML += `<td><button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs js-todo-remove">
+            tr.innerHTML += `<td><button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs js-post-remove">
                     <i class="fa fa-times"></i>
                 </button></td>
             `;
             container.appendChild(tr);
 
-            tr.querySelector('.js-todo-remove').addEventListener('click', (e) => {
-                const { id } = todoItem;
-                DELETE('/api/todo/' + id)
+            tr.querySelector('.js-post-remove').addEventListener('click', (e) => {
+                const { id } = post;
+                DELETE('/api/post/' + id)
                     .then((data) => {
                         renderFeed(data);
                     })
@@ -106,14 +106,13 @@
                     });
             });
 
-            tr.querySelector('.js-todo-edit').addEventListener('click', (e) => {
-              console.log("edit button")
+            tr.querySelector('.js-post-edit').addEventListener('click', (e) => {
               const editBox = document.querySelector('.js-edit-box')
               editBox.innerHTML = ""
               editBox.innerHTML += `
               <div class="input-group">
-              <input type="text" class="form-control js-update-title" placeholder="Username" aria-describedby="basic-addon1" value="${todoItem.data.title}">
-              <input type="text" class="form-control js-update-text" placeholder="Username" aria-describedby="basic-addon1" value="${todoItem.data.todo}">
+              <input type="text" class="form-control js-update-title" placeholder="Username" aria-describedby="basic-addon1" value="${post.data.title}">
+              <input type="text" class="form-control js-update-text" placeholder="Username" aria-describedby="basic-addon1" value="${post.data.post}">
               </div>
               <div class="btn-group btn-group-justified" role="group" aria-label="...">
                 <div class="btn-group" role="group">
@@ -129,26 +128,21 @@
             
             //Update
             const updatePost = () => {
-              console.log("clicked updater")
                 const updateTitle = document.querySelector('.js-update-title');
-                // const { id } = todoItem;
+                // const { id } = post;
                 const mainInput = document.querySelector('.js-update-text');
                 mainInput.setAttribute('disabled', 'disabled');
-                console.log(updateTitle.value)
 
-
-                PUT('/api/todo/' + todoItem.id, {
+                PUT('/api/post/' + post.id, {
                   title: updateTitle.value,
-                  todo: mainInput.value
+                  post: mainInput.value
                 })
                 .then((data) => {
-                  console.log(data)
                     updateTitle.removeAttribute('disabled');
                     mainInput.removeAttribute('disabled');
                     updateTitle.value = '';
                     mainInput.value = '';
                     renderFeed(data);
-                    console.log('rendered')
                 }).catch((e) => {
                     alert(e)
                 })
@@ -160,9 +154,9 @@
     };// End of render on page load
 
     //Initializer on page load
-    GET('/api/todos')
-        .then((todoItems) => {
-            renderFeed(todoItems);
+    GET('/api/posts')
+        .then((posts) => {
+            renderFeed(posts);
         });
 
 })();

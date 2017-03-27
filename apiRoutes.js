@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const TodoList = require('./todoList')
+const blogApp = require('./blogApp')
 
 // body parser middleware
 const parser = require('body-parser');
@@ -10,67 +10,51 @@ const parser = require('body-parser');
 //parses requests with the content type of `application/json`
 router.use(parser.json());
 
-//define a route on `/hello/world`
-router.get('/todos',(request, response, next) => {
+//get posts
+router.get('/posts', (request, response, next) => {
 	next();
 });
 
-//here's my issue. not passing in ID!!
-router.get('/post/:postId',(request, response, next) => {
-	// console.log(request.params.postId)
-
-	// const path = url.slice(API_PREFIX.length);
-	// const lastBit = path.split('/').pop();
-	// const isLastBitNum = !isNaN(lastBit);
-	// const id = parseInt(lastBit, 10);
+//get post based on ID
+router.get('/post/:postId', (request, response, next) => {
 	const id = parseInt(request.params.postId, 10);
-	// const id = request.params.id
-	// console.log("in router looking for ID: "+ id)
+	blogApp.getItem(id);
 
-
-	TodoList.getItem(id);
-	// console.log("in the get 1: " +TodoList.getItem())
-	// next();
 	response.header('Content-Type', 'application/json');
-	response.send(TodoList.getItem(id));
+	response.send(blogApp.getItem(id));
 });
 
 
-// post todos
-router.post('/todos', (request, response, next) => {
+// post posts
+router.post('/posts', (request, response, next) => {
 	const requestBody = request.body;
 
 	// Add a post
-	TodoList.createItem(requestBody);
+	blogApp.createItem(requestBody);
 
 	next();
 });
 
-// put todo
-router.put('/todo/:id', (request, response, next) => {
-    const id = parseInt(request.params.id, 10);
-   	const dataPayload = request.body;
-
-	Object.keys(dataPayload).forEach((key) => {
-		TodoList.updateItem(id, 'data.' + key , dataPayload[key]);
-   	})
-	next();
-}); // todo
-
-
-
-// delete todo
-router.delete('/todo/:id', (request, response, next) => {
+// put post
+router.put('/post/:id', (request, response, next) => {
 	const id = parseInt(request.params.id, 10);
-	// console.log(id)
+	const dataPayload = request.body;
+	Object.keys(dataPayload).forEach((key) => {
+		blogApp.updateItem(id, 'data.' + key, dataPayload[key]);
+	})
+	next();
+}); // post
 
-	TodoList.deleteItem(id);
+// delete post
+router.delete('/post/:id', (request, response, next) => {
+	const id = parseInt(request.params.id, 10);
+	blogApp.deleteItem(id);
 	next();
 }); // delete
 
 router.use((request, response) => {
 	response.header('Content-Type', 'application/json');
-	response.send(TodoList.getItems());
+	response.send(blogApp.getItems());
 });
 
 

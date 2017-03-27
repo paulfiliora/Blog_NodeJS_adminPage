@@ -5,21 +5,18 @@ const express = require('express');
 const serveStatic = require('serve-static');
 
 // api routes
-const todoApi = require('./apiRoutes');
+const blogApi = require('./apiRoutes');
 
 //create an express application
 const app = express();
 
-
-app.use('/', serveStatic( 'public', {
-	'index': [ 'index.html' ]
+app.use('/', serveStatic('public', {
+	'index': ['index.html']
 }));
 
-
-app.use('/api',  todoApi);
+app.use('/api', blogApi);
 
 //have the application listen on a specific port
 app.listen(3000, () => {
-    console.log('Example app listening on port 3000!');
+	console.log('Example app listening on port 3000!');
 });
-

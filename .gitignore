@@ -1,2 +1,4 @@
 node_modules/*
 public/list-bootstrap-dashboard-master/*
+.gitignore*
+reference/*

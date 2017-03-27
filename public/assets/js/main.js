@@ -69,27 +69,24 @@
         });
     } // DELETE
 
-//Render todo items from lowDB with checkbox toggle and remove icone
-    function render(todoItems) {
-        // const sortedData = todoItems.sortby(['id'])
-                // console.log("renderall: " +todoItems)
+//Render post items from lowDB with checkbox toggle and remove icone
+    function render(posts) {
 
-        const container = document.querySelector('.js-todolist');
+        const container = document.querySelector('.js-blogPosts');
         container.innerHTML = '';
-        const todoItemsReverse = todoItems.reverse();
-        // for (const todoItem of sortedData) {
-        for (const todoItem of todoItemsReverse) {
+        const postsReverse = posts.reverse();
+        for (const post of postsReverse) {
 
             const div = document.createElement('div');
             div.innerHTML = `
-            <article class="container box style1 right todoinput blogBox">
-      				<img class="image fit"src="images/${todoItem.data.image}" alt="" />
+            <article class="container box style1 right postinput blogBox">
+      				<img class="image fit"src="images/${post.data.image}" alt="" />
       				<div class="inner">
       					<header>
-      						<h2><a href="#/post/${todoItem.id}">${todoItem.data.title}</a></h2>
+      						<h2><a href="#/post/${post.id}">${post.data.title}</a></h2>
       					</header>
-      					<p class="previewText">${todoItem.data.todo}</p>
-                        <span><a href="#/post/${todoItem.id}">-Read more</a></span>
+      					<p class="previewText">${post.data.post}</p>
+                        <span><a href="#/post/${post.id}">-Read more</a></span>
       				</div>
       			</article>
 			      `;
@@ -98,14 +95,9 @@
     };// End of render on page load
 
 
-// somehow need to use the postID as the ID to get a specific item in the Todos,
-// then render just the data: todo, title, image.
+// Render single post based on URL :ID
+    function renderOnePost(post) {
 
-    function renderOnePost(todoItem) {
-        // console.log("render1 " +todoItem)
-
-
-        // const sortedData = todoItems.sortby(['id'])
         const mainContainer = document.querySelector('.js-to-hide');
         mainContainer.style.display = "none";
 
@@ -115,15 +107,13 @@
 
         postContainer.innerHTML = '';
         
-        // const todoItemsReverse = todoItems.reverse();
-        // for (const todoItem of todoItemsy) {
             const div = document.createElement('div');
         postContainer.innerHTML = `
             <a href="../index.html">Back to home</a>
                 <header>
-                    <img class="image fit"src="images/${todoItem.data.image}" alt="" />
-                    <h2>${todoItem.data.title}</h2>
-                    <p>${todoItem.data.todo}</p>
+                    <img class="image fit"src="images/${post.data.image}" alt="" />
+                    <h2>${post.data.title}</h2>
+                    <p>${post.data.post}</p>
                 </header>
                 <section>
                     <hr />
@@ -131,45 +121,31 @@
                         <p></p>
                     </header>
                 </section>
+                <div id="disqus_thread"></div>
+
                   `;
             postContainer.appendChild(div);
         // };
     };// End of render on page load
 
-    function convertMS(ms) {
-      var d, h, m, s;
-      s = Math.floor(ms / 1000);
-      m = Math.floor(s / 60);
-      s = s % 60;
-      h = Math.floor(m / 60);
-      m = m % 60;
-      d = Math.floor(h / 24);
-      h = h % 24;
-      return { d: d, h: h, m: m, s: s };
-    };
-
-    // console.log(convertMS(1490011140664))
-
-    //Flatiron Director. This creates unique pages based on postID.
+//Flatiron Director. This creates unique pages based on postID.
       const routes = {
         '/home': () => {
             //Initializer on page load
-            GET('/api/todos')
-                .then((todoItems) => {
-                    render(todoItems);
+            GET('/api/posts')
+                .then((posts) => {
+                    render(posts);
                 });
         },
         '/post/:postId': (postId) => {
             console.log("starting postid: " +postId)
             //Initializer on page load
             GET('/api/post/'+ postId)
-                .then((todoItem) => {
-                    console.log("after get in Main: " +todoItem)
-                    renderOnePost(todoItem);
+                .then((post) => {
+                    renderOnePost(post);
                 });
         }
     };
-
 
     const router = Router(routes);
 

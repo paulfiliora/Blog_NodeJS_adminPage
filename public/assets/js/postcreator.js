@@ -89,9 +89,9 @@ const popup = document.querySelector('.notify');
         const mainInput = document.querySelector('.js-todo-text');
         const imageInput = document.querySelector('.js-image-name');
         mainInput.setAttribute('disabled', 'disabled');
-        POST('/api/todos', {
+        POST('/api/posts', {
             title: titleInput.value,
-            todo: mainInput.value,
+            post: mainInput.value,
             image: imageInput.value,
             when: new Date().getTime() + 9 * 60 * 60 * 1000
             // const time = convertMS(when)
